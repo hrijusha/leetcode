@@ -32,3 +32,10 @@
 	<li><code>0 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
 	<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
 </ul>
+
+## 🧠 Approach
+Sorting an array is out of question because the solution has to be in O(n) time. Hashset was used because searching time complexity is O(1). 
+
+### The Core Idea: Identify the "Start" of a Sequence
+**Only start counting when we are at the absolute beginning of a sequence.** * A number `x` is the start of a sequence *only if* the number immediately preceding it (`x - 1`) does **not** exist in our HashSet.
+Once you have identified the start, then start iterating through the set to find longest sequence.
