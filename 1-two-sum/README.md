@@ -39,3 +39,32 @@
 
 <p>&nbsp;</p>
 <strong>Follow-up:&nbsp;</strong>Can you come up with an algorithm that is less than <code>O(n<sup>2</sup>)</code><font face="monospace">&nbsp;</font>time complexity?
+
+## My Approach & Notes
+
+### Approach 1: Brute Force (Nested Loops)
+The most straightforward way is to check every possible pair in the array to see if they add up to the target. I used an outer loop to pick the first number, and an inner loop to pick the second number.
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    result[0] = i;
+                    result[1] = j;
+                }
+            }
+        }
+        return result;
+    }
+}
+
+* **Time Complexity:** `O(n^2)` because for every element `n`, we iterate through the rest of the array. This is slow for large inputs.
+* **Space Complexity:** `O(1)` because we are only using a fixed-size array (`int[2]`) to store the result, requiring no extra memory that scales with the input size.
+
+### Approach 2: Optimized (Hash Map) - *The Follow-up*
+To achieve less than `O(n^2)` time complexity, we can use a Hash Map. As we iterate through the array, we can calculate the `complement` needed to reach the target (`target - current_number`). We check if this complement is already in our map. If it is, we found our pair! If not, we add the current number and its index to the map.
+
+* **Time Complexity:** `O(n)` because we only traverse the array exactly once.
+* **Space Complexity:** `O(n)` because in the worst case, we might need to store all elements in the hash map.
