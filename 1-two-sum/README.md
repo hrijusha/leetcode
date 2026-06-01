@@ -45,6 +45,7 @@
 ### Approach 1: Brute Force (Nested Loops)
 The most straightforward way is to check every possible pair in the array to see if they add up to the target. I used an outer loop to pick the first number, and an inner loop to pick the second number.
 
+```java
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         int[] result = new int[2];
@@ -59,6 +60,7 @@ class Solution {
         return result;
     }
 }
+```
 
 * **Time Complexity:** `O(n^2)` because for every element `n`, we iterate through the rest of the array. This is slow for large inputs.
 * **Space Complexity:** `O(1)` because we are only using a fixed-size array (`int[2]`) to store the result, requiring no extra memory that scales with the input size.
