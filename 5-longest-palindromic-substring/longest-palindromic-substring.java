@@ -1,35 +1,29 @@
-//Brute force
 class Solution {
     public String longestPalindrome(String s) {
-        int maxLen = 0;
-        String longestPalindrome = "";
+        int globalMax = 0;
+        int start = 0;
+        
         if (s == null || s.length() < 1)
             return "";
+            
         for (int i = 0; i < s.length(); i++) {
-            for (int j = i; j < s.length(); j++) {
-                String s1 = s.substring(i, j + 1);
-                if (checkPalindrome(s1)) {
-                    if (s1.length() > maxLen) {
-                        longestPalindrome = s1;
-                        maxLen = s1.length();
-                    }
-                }
+            int oddLen = findLargestPalindromeLength(s, i, i);
+            int evenLen = findLargestPalindromeLength(s, i, i + 1);
+            int maxLen = Math.max(oddLen, evenLen);
+            if (maxLen > globalMax) {
+                globalMax = maxLen;
+                start = i - (maxLen - 1) / 2; 
             }
         }
-        return longestPalindrome;
+        
+        return s.substring(start, start + globalMax);
     }
 
-    private boolean checkPalindrome(String s) {
-        int left = 0;
-        int right = s.length() - 1;
-
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
+    private int findLargestPalindromeLength(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
         }
-        return true;
+        return right - left - 1;   
     }
 }
