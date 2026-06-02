@@ -34,7 +34,7 @@ Notice that the answer must be a substring, &quot;pwke&quot; is a subsequence an
 	<li><code>s</code> consists of English letters, digits, symbols and spaces.</li>
 </ul>
 
-## 💡 Approach 1: Sliding Window using HashSet (Standard)
+## 💡 Approach: Sliding Window using HashSet
 
 This approach uses the **Sliding Window** technique with two pointers (`left` and `right`) and a `HashSet`. 
 
