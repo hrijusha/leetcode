@@ -33,3 +33,13 @@ Notice that the answer must be a substring, &quot;pwke&quot; is a subsequence an
 	<li><code>0 &lt;= s.length &lt;= 5 * 10<sup>4</sup></code></li>
 	<li><code>s</code> consists of English letters, digits, symbols and spaces.</li>
 </ul>
+
+## 💡 Approach 1: Sliding Window using HashSet (Standard)
+
+This approach uses the **Sliding Window** technique with two pointers (`left` and `right`) and a `HashSet`. 
+
+We expand our window by moving the `right` pointer and adding characters to the set. If we encounter a character that is already in the set, we shrink the window from the `left` by removing characters from the set until the duplicate is gone. We continuously track the maximum window size.
+
+### ⏱️ Complexity Analysis
+* **Time Complexity:** `O(N)` in average cases (technically `O(2N)` worst case as each character might be visited by both pointers).
+* **Space Complexity:** `O(K)` where `K` is the size of the character set (e.g., 26 for English letters or 128 for ASCII).
