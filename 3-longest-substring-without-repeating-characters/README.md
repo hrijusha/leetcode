@@ -34,6 +34,54 @@ Notice that the answer must be a substring, &quot;pwke&quot; is a subsequence an
 	<li><code>s</code> consists of English letters, digits, symbols and spaces.</li>
 </ul>
 
+## 💡 Approach: Brute force
+The Algorithm
+Generate all substrings: Use two nested loops. The outer loop pointer i represents the starting index of the substring, and the inner loop pointer j represents the ending index.
+
+Extract and verify: For every combination of i and j, isolate the substring s[i...j].
+
+Check for uniqueness: Pass that specific substring into a helper function that iterates through it, using a Hash Set to track seen characters. If a character is already in the set, the substring is invalid.
+
+Update the maximum: If the helper function confirms all characters are unique, compare the substring's length against your current maximum length and update it if it is larger.
+
+```java
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int maxLength = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (isUnique(s, i, j)) {
+                    // Update maxLength if this valid substring is the longest we've seen
+                    maxLength = Math.max(maxLength, j - i + 1);
+                }
+            }
+        }
+        
+        return maxLength;
+    }
+    
+    // Helper function to verify if characters in s[start...end] are unique
+    private boolean isUnique(String s, int start, int end) {
+        Set<Character> seen = new HashSet<>();
+        
+        for (int i = start; i <= end; i++) {
+            char c = s.charAt(i);
+            if (seen.contains(c)) {
+                return false; // Duplicate found
+            }
+            seen.add(c);
+        }
+        
+        return true; // All characters are unique
+    }
+}
+```
+
 ## 💡 Approach: Sliding Window using HashSet
 
 This approach uses the **Sliding Window** technique with two pointers (`left` and `right`) and a `HashSet`. 
