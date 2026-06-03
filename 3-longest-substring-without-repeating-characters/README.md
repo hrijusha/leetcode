@@ -81,6 +81,17 @@ class Solution {
     }
 }
 ```
+## ⏱️ Complexity Analysis
+
+### Time Complexity: $\mathcal{O}(n^3)$
+The time complexity is cubic due to three nested operations:
+* **Generating Substrings:** The two outer `for` loops are responsible for generating every possible start and end index for a substring. The outer loop runs $n$ times, and the inner loop runs $n - i$ times. This results in generating exactly $\frac{n(n+1)}{2}$ total substrings, which takes $\mathcal{O}(n^2)$ time.
+* **Checking Uniqueness:** For each of those $\mathcal{O}(n^2)$ substrings, the `isUnique` helper method is called. This method iterates through the characters from `start` to `end`, taking up to $\mathcal{O}(n)$ time in the worst case (e.g., when all characters are unique).
+* **Total Operations:** Multiplying the substring generation by the uniqueness check gives $\mathcal{O}(n^2) \times \mathcal{O}(n) = \mathcal{O}(n^3)$. 
+*(Note: Because of this cubic time complexity, this approach will likely result in a "Time Limit Exceeded" error on large inputs).*
+
+### Space Complexity: $\mathcal{O}(\min(n, m))$
+* **Auxiliary Space:** The `isUnique` method creates a new `HashSet` for every substring check to track previously seen characters. The maximum number of elements this set will ever store is bounded by either the length of the string $n$, or the size of the total character set $m$ (e.g., 26 for lowercase English letters, 128 for standard ASCII). Therefore, the space complexity is $\mathcal{O}(\min(n, m))$.
 
 ## 💡 Approach: Sliding Window using HashSet
 
