@@ -70,11 +70,19 @@ class Solution {
 }
 
 ```
+## ⏱️ Complexity Analysis
 
-Complexity Analysis
+**Approach:** Brute Force
 
-Time Complexity: $O(n \log n)$The dominant operation here is Arrays.sort(), which takes $O(n \log n)$ time. The subsequent for loop only iterates through the array once, taking $O(n)$ time. This is a huge optimization over the $O(n^3)$ brute-force method.
-Space Complexity: $O(1)$ or $O(\log n)$Depending on the exact sorting algorithm used under the hood by Java for primitive types (usually a Dual-Pivot Quicksort), it might take a small amount of extra memory for the call stack, but we aren't creating any new data structures.
+### Time Complexity: $\mathcal{O}(n^3)$
+The time complexity is cubic due to three nested operations:
+* **Outer Loop:** Iterates through each of the $n$ elements in the array, contributing $\mathcal{O}(n)$.
+* **Inner Loop:** In the worst-case scenario (e.g., if the array is already one long consecutive sequence), the `while` loop can run up to $n$ times for a given element, contributing another $\mathcal{O}(n)$.
+* **Linear Search:** Inside the `while` loop, checking if the array contains the next consecutive number requires a linear scan of the entire array, taking an additional $\mathcal{O}(n)$ time.
+* **Total Operations:** $\mathcal{O}(n) \times \mathcal{O}(n) \times \mathcal{O}(n) = \mathcal{O}(n^3)$.
+
+### Space Complexity: $\mathcal{O}(1)$
+* **Auxiliary Space:** The algorithm only uses a few primitive variables (`maxLength`, `currentNum`, `currentLength`) to keep track of the counts. It does not allocate any additional data structures that scale with the input size $n$, resulting in constant auxiliary space.
 
 ## Optimised Approach
 Sorting an array is out of question because the solution has to be in O(n) time. Hashset was used because searching time complexity is O(1). 
