@@ -28,3 +28,27 @@
 	<li><code>1 &lt;= s.length &lt;= 1000</code></li>
 	<li><code>s</code> consists of lowercase English letters.</li>
 </ul>
+
+---
+
+## Approach: Expand Around Center
+
+The most space-efficient way to solve this is the **Expand Around Center** approach. Every palindrome is symmetrical, mirroring around its center. Therefore, we can treat every character (and every space between characters) as a potential center and expand outwards to find all valid palindromes.
+
+### Intuition
+For a string of length $N$, there are $2N - 1$ possible centers:
+1.  **Odd length palindromes:** The center is a single character (e.g., the `'b'` in `"aba"`).
+2.  **Even length palindromes:** The center is the space between two characters (e.g., between the `'b'`s in `"abba"`).
+
+We iterate through all possible centers. For each center, we expand our `left` and `right` pointers outwards as long as the characters match and the pointers stay within the bounds of the string.
+
+---
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(N^2)$
+    * $N$ is the length of the string. We iterate through $2N - 1$ centers. In the worst-case scenario (a string of all identical characters), expanding outwards takes $N/2$ steps per center. 
+* **Space Complexity:** $O(1)$
+    * We only use a few integer variables for our pointers and counters, requiring no extra memory proportional to the string size.
+
+---
