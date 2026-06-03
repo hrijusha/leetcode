@@ -33,7 +33,50 @@
 	<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
 </ul>
 
-## 🧠 Approach
+## Brute Force Approach
+
+```java
+import java.util.Arrays;
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+
+        Arrays.sort(nums);
+
+        int longestStreak = 1;
+        int currentStreak = 1;
+
+        for (int i = 1; i < nums.length; i++) {
+            // Skip duplicates
+            if (nums[i] != nums[i - 1]) {
+                // If consecutive, increment the streak
+                if (nums[i] == nums[i - 1] + 1) {
+                    currentStreak += 1;
+                } 
+                // Sequence broke, reset the streak
+                else {
+                    longestStreak = Math.max(longestStreak, currentStreak);
+                    currentStreak = 1;
+                }
+            }
+        }
+
+        // Final check in case the longest streak was at the very end of the array
+        return Math.max(longestStreak, currentStreak);
+    }
+}
+
+```
+
+Complexity Analysis
+
+Time Complexity: $O(n \log n)$The dominant operation here is Arrays.sort(), which takes $O(n \log n)$ time. The subsequent for loop only iterates through the array once, taking $O(n)$ time. This is a huge optimization over the $O(n^3)$ brute-force method.
+Space Complexity: $O(1)$ or $O(\log n)$Depending on the exact sorting algorithm used under the hood by Java for primitive types (usually a Dual-Pivot Quicksort), it might take a small amount of extra memory for the call stack, but we aren't creating any new data structures.
+
+## Optimised Approach
 Sorting an array is out of question because the solution has to be in O(n) time. Hashset was used because searching time complexity is O(1). 
 
 ### The Core Idea: Identify the "Start" of a Sequence
