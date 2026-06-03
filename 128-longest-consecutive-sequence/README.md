@@ -33,7 +33,7 @@
 	<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
 </ul>
 
-### Brute Force Approach
+## Brute Force Approach
 
 ```java
 import java.util.Arrays;
@@ -72,17 +72,17 @@ class Solution {
 ```
 ## ⏱️ Complexity Analysis
 
-## Time Complexity: $\mathcal{O}(n^3)$
+### Time Complexity: $\mathcal{O}(n^3)$
 The time complexity is cubic due to three nested operations:
 * **Outer Loop:** Iterates through each of the $n$ elements in the array, contributing $\mathcal{O}(n)$.
 * **Inner Loop:** In the worst-case scenario (e.g., if the array is already one long consecutive sequence), the `while` loop can run up to $n$ times for a given element, contributing another $\mathcal{O}(n)$.
 * **Linear Search:** Inside the `while` loop, checking if the array contains the next consecutive number requires a linear scan of the entire array, taking an additional $\mathcal{O}(n)$ time.
 * **Total Operations:** $\mathcal{O}(n) \times \mathcal{O}(n) \times \mathcal{O}(n) = \mathcal{O}(n^3)$.
 
-## Space Complexity: $\mathcal{O}(1)$
+### Space Complexity: $\mathcal{O}(1)$
 * **Auxiliary Space:** The algorithm only uses a few primitive variables (`maxLength`, `currentNum`, `currentLength`) to keep track of the counts. It does not allocate any additional data structures that scale with the input size $n$, resulting in constant auxiliary space.
 
-### Optimised Approach
+## Optimised Approach
 Sorting an array is out of question because the solution has to be in O(n) time. Hashset was used because searching time complexity is O(1). 
 
 ### The Core Idea: Identify the "Start" of a Sequence
