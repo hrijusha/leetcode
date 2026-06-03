@@ -45,7 +45,7 @@ This is the most straightforward, naive way to solve the problem. The core idea 
 ```java
 class Solution {
     public int countSubstrings(String s) {
-        int count = 0; // Declared inside the method to reset per test case
+        int count = 0;
         int n = s.length();
         
         for (int i = 0; i < n; i++) {
@@ -60,7 +60,6 @@ class Solution {
     }
 
     private boolean checkPalindrome(String s, int i, int j) {
-        // Creates a new string in memory for every check
         String sub = s.substring(i, j + 1);
         
         int left = 0;
