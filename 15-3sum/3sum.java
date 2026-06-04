@@ -7,10 +7,7 @@ class Solution {
         for (int i = 0; i < n - 2; i++) {
             if (nums[i] > 0)
                 break;
-            if (i > 0 && nums[i] == nums[i - 1]) {
-                continue;
-            }
-
+                
             int left = i + 1;
             int right = n - 1;
 
