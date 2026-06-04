@@ -16,12 +16,10 @@ class Solution {
 
             while (left < right) {
                 int sum = nums[i] + nums[left] + nums[right];
-
                 if (sum == 0) {
                     set.add(Arrays.asList(nums[i], nums[left], nums[right]));
                     left++;
                     right--;
-
                 } else if (sum < 0) {
                     left++;
                 } else {
