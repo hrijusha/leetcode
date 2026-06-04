@@ -57,7 +57,7 @@ class Solution {
     }
 
     private void check(int[] nums, int i, int j, int k, Set<List<Integer>> set) {
-        if (i != j || j != k) {
+        if (i != j || j != k || k!=i) {
             if (nums[i] + nums[j] + nums[k] == 0) {
                 List<Integer> list = new ArrayList<>(Arrays.asList(nums[i], nums[j], nums[k]));
                 Collections.sort(list);
