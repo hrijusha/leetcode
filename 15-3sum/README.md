@@ -39,3 +39,31 @@ Notice that the order of the output and the order of the triplets does not matte
 	<li><code>3 &lt;= nums.length &lt;= 3000</code></li>
 	<li><code>-10<sup>5</sup> &lt;= nums[i] &lt;= 10<sup>5</sup></code></li>
 </ul>
+
+```java
+//Brute force
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> set = new HashSet<>();
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                for (int k = j + 1; k < n; k++) {
+                    check(nums, i, j, k, set);
+                }
+            }
+        }
+        return new ArrayList<>(set);
+    }
+
+    private void check(int[] nums, int i, int j, int k, Set<List<Integer>> set) {
+        if (i != j || j != k) {
+            if (nums[i] + nums[j] + nums[k] == 0) {
+                List<Integer> list = new ArrayList<>(Arrays.asList(nums[i], nums[j], nums[k]));
+                Collections.sort(list);
+                set.add(list);
+            }
+        }
+    }
+}
+```
