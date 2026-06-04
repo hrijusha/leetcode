@@ -10,9 +10,6 @@
  *     }
  * }
  */
-import java.util.Set;
-import java.util.HashSet;
-
 public class Solution {
     public boolean hasCycle(ListNode head) {
         ListNode curr = head;
