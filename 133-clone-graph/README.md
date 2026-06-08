@@ -60,3 +60,18 @@ class Node {
 	<li>There are no repeated edges and no self-loops in the graph.</li>
 	<li>The Graph is connected and all nodes can be visited starting from the given node.</li>
 </ul>
+
+## Core Logic
+1. **Edge Case:** If the input node is `null`, return `null` immediately.
+2. **State Tracking:** We use a `HashMap` where the *key* is the original node and the *value* is the newly cloned node. This prevents us from cloning the same node twice and helps us wire the connections correctly.
+3. **Recursive DFS (`clone` method):**
+   * **Base Case:** Before creating a new clone, check if the `originalNode` is already in our `visited` map. If it is, we simply return the previously created clone to form the cycle/connection.
+   * **Cloning:** If it hasn't been visited, we create a `new Node` with the original value and an empty list of neighbors.
+   * **Registering:** We immediately put this new node into the `visited` map *before* iterating through its neighbors to prevent infinite loops.
+   * **Traversing Neighbors:** We iterate through the original node's neighbors, recursively call the `clone` function on each, and add the returned clones to our current clone's neighbor list.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(V + E)`** Where `V` is the number of vertices (nodes) and `E` is the number of edges. We visit every node exactly once and iterate over every edge exactly once during the DFS traversal.
+* **Space Complexity:** **`O(V)`** The space complexity is determined by two factors:
+  1. The `HashMap`, which will store exactly `V` nodes.
+  2. The recursive call stack. In the worst-case scenario (a linear graph/linked list), the recursion stack will go `V` levels deep.
