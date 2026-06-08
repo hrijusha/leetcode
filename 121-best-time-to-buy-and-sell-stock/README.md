@@ -29,3 +29,15 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
 	<li><code>1 &lt;= prices.length &lt;= 10<sup>5</sup></code></li>
 	<li><code>0 &lt;= prices[i] &lt;= 10<sup>4</sup></code></li>
 </ul>
+
+## Core Logic
+1. **Initialization:** Track the `minPrice` seen so far (initialized to the first day's price) and the `maxProfit` we can make (initialized to `0`).
+2. **Iteration:** Traverse through the array of prices day by day.
+3. **State Evaluation:** For each `price`:
+   * Update `minPrice` if the current `price` is strictly lower than the lowest price we've seen on previous days.
+   * Calculate the `profit` we would make if we sold on this current day (current `price` - `minPrice`).
+4. **Updating:** Update the `maxProfit` if this newly calculated profit is greater than our previous `maxProfit`.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** We iterate through the given `prices` array of length *N* exactly once. All operations inside the loop are basic comparisons and arithmetic, which run in constant time.
+* **Space Complexity:** **`O(1)`** We optimize space by only maintaining two integer variables (`minPrice` and `maxProfit`). We do not use any additional data structures, so the memory footprint is strictly constant.
