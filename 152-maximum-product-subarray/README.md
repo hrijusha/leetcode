@@ -30,7 +30,7 @@
 	<li>The product of any subarray of <code>nums</code> is <strong>guaranteed</strong> to fit in a <strong>32-bit</strong> integer.</li>
 </ul>
 
-**Core Logic:**
+## **Core Logic:**
 1. **Initialization:** We initialize our `max`, `min`, and `maxP` (global max) state variables with the first element of the array.
 2. **Iteration:** We traverse the array starting from the second element.
 3. **State Evaluation:** At each step, the new local maximum and local minimum can originate from three possibilities:
