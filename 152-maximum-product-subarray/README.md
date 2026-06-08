@@ -29,3 +29,16 @@
 	<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
 	<li>The product of any subarray of <code>nums</code> is <strong>guaranteed</strong> to fit in a <strong>32-bit</strong> integer.</li>
 </ul>
+
+**Core Logic:**
+1. **Initialization:** We initialize our `max`, `min`, and `maxP` (global max) state variables with the first element of the array.
+2. **Iteration:** We traverse the array starting from the second element.
+3. **State Evaluation:** At each step, the new local maximum and local minimum can originate from three possibilities:
+   * The current number itself (abandoning the previous sequence to start a new subarray).
+   * The current number multiplied by the previous local maximum.
+   * The current number multiplied by the previous local minimum (multiplying a highly negative minimum by a negative current number yields a high positive number).
+4. **Updating:** We calculate the new local maximum and minimum from these three choices. A temporary variable is used to hold the previous maximum to prevent state overwriting. We then update our `maxP` if the new local maximum is strictly greater.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** We iterate through the given array of length *N* exactly once. All operations inside the loop (comparisons and basic arithmetic) execute in constant time `O(1)`.
+* **Space Complexity:** **`O(1)`** We optimize the space complexity by only tracking a few integer variables (`max`, `min`, `tempMax`, and `maxP`) at each step rather than maintaining an entire dynamic programming array. This requires strictly constant extra space.
