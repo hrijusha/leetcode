@@ -35,3 +35,18 @@ Since an empty string reads the same forward and backward, it is a palindrome.
 	<li><code>1 &lt;= s.length &lt;= 2 * 10<sup>5</sup></code></li>
 	<li><code>s</code> consists only of printable ASCII characters.</li>
 </ul>
+
+**Core Logic:**
+1. **String Sanitization:** * We iterate through the original string, ignoring spaces and punctuation.
+   * Using a `StringBuilder`, we extract only the alphanumeric characters and convert them to lowercase.
+   * This guarantees we are only comparing valid characters.
+2. **Two-Pointer Comparison:**
+   * If the sanitized string is empty, it is technically a palindrome, so we return `true`.
+   * We place one pointer at the beginning (`left`) and one at the end (`right`) of the cleaned string.
+   * We move the pointers toward the center, comparing the characters at each step.
+   * If any characters mismatch, it is not a palindrome. If the pointers meet in the middle without any mismatches, it is a valid palindrome.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** Where `N` is the length of the string. We iterate through the string once to clean it `O(N)`, and then we iterate through at most half of the cleaned string to check for the palindrome `O(N/2)`. This simplifies to linear time, `O(N)`.
+* **Space Complexity:** **`O(N)`**
+  Creating the intermediate cleaned string using `StringBuilder` and `toCharArray()` requires allocating new memory proportional to the size of the original string.
