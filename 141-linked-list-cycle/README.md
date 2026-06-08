@@ -40,3 +40,19 @@
 
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
+
+## Approach: Hash Set (Visited Tracking)
+The simplest way to detect a cycle is to keep track of every node we have visited. As we traverse the linked list, we can drop each node into a "visited" collection. If we ever encounter a node that is already in our collection, we know we've been running in a circle.
+
+## Core Logic
+1. **Initialization:** Create a `HashSet` to store the references of the nodes we visit. We use a Set because it provides constant time `O(1)` lookups.
+2. **Traversal:** Iterate through the linked list starting from the `head` using a `curr` pointer.
+3. **Detection:**
+   * At each step, check if the `curr` node is already inside the `seen` set.
+   * If it is, a cycle is detected! Return `true`.
+   * If it is not, add the `curr` node to the `seen` set and move to the `next` node.
+4. **Termination:** If the `curr` pointer eventually reaches `null`, it means we reached the end of the list without looping. Return `false`.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** Where `N` is the number of nodes in the linked list. We visit each node at most once. Adding a node to a HashSet and checking for its existence both take `O(1)` time on average.
+* **Space Complexity:** **`O(N)`** In the worst-case scenario (a linked list with no cycle), we will end up storing every single node in the `HashSet`, requiring memory proportional to the size of the list.
