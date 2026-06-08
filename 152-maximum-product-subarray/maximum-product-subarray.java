@@ -4,7 +4,6 @@ class Solution {
         int max = nums[0];
         int min = nums[0];
         
-        // Start from index 1 to avoid processing nums[0] twice
         for (int i = 1; i < nums.length; i++) {
             int num = nums[i];
             
