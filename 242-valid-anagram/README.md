@@ -27,3 +27,19 @@
 
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> What if the inputs contain Unicode characters? How would you adapt your solution to such a case?</p>
+
+## Approach: Frequency Counting (Hash Maps)
+To determine if two strings are anagrams, we don't need to actually rearrange them. We just need to verify that both strings contain the exact same characters in the exact same quantities.
+
+**Core Logic:**
+1. **Early Exit:** If the lengths of string `s` and string `t` are different, it is mathematically impossible for them to be anagrams. We immediately return `false` to save processing time.
+2. **State Tracking:** We create two `HashMap`s (`map1` and `map2`) to track the frequency of each character in both strings.
+3. **Simultaneous Counting:** Because we know both strings are the same length at this point, we can iterate through them both in a single `for` loop. For every index `i`:
+   * We extract the character from `s` and increment its count in `map1`.
+   * We extract the character from `t` and increment its count in `map2`.
+   * *Note: `getOrDefault(char, 0) + 1` is a clean way to handle characters we haven't seen yet.*
+4. **Final Verification:** We simply return the result of `map1.equals(map2)`. In Java, this built-in method automatically checks if both maps have the same size, the same keys, and the exact same values for those keys.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** Where `N` is the length of the strings. We iterate through the characters exactly once. Hash Map insertions and lookups operate in `O(1)` constant time. The final `.equals()` check also takes `O(N)` time in the worst case, keeping the overall time linear.
+* **Space Complexity:** **`O(N)`** In the worst-case scenario (where all characters in the string are unique), our Hash Maps will grow proportionally to the size of the input strings. *(Note: If the input is restricted to just lowercase English letters, the space complexity is technically `O(1)` because the maps will never hold more than 26 key-value pairs, regardless of how long the strings are).*
