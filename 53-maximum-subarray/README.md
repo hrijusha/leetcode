@@ -35,3 +35,19 @@
 
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> If you have figured out the <code>O(n)</code> solution, try coding another solution using the <strong>divide and conquer</strong> approach, which is more subtle.</p>
+
+# Approach: Kadane's Algorithm
+The brute force way to solve this is to calculate the sum of every possible subarray, which takes `O(N^2)` time. Kadane's Algorithm allows us to do this in a single pass by making a localized decision at every single number we visit.
+
+**Core Logic:**
+1. **The Choice:** As we iterate through the array, for every number `nums[i]`, we have to make a choice:
+   * Do we add this number to our existing running subarray?
+   * Or do we abandon the previous subarray and start a brand new one starting exactly at `nums[i]`?
+2. **The Rule:** We only start a new subarray if the previous running sum is **negative**. A negative running sum will only ever drag down the value of the current number. We represent this mathematically with `Math.max(nums[i], currentSum + nums[i])`.
+3. **State Tracking:** * `currentSum` keeps track of the best possible sum ending at the current index.
+   * `maxSum` keeps track of the absolute highest `currentSum` we have ever seen across the entire iteration.
+4. **Updating:** At each step, we update our `currentSum` using the rule above, and then immediately check if it beats our historical `maxSum`.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** Where `N` is the number of elements in the array. We process every element in the array exactly once in a single `for` loop.
+* **Space Complexity:** **`O(1)`** We optimize our space footprint by only maintaining two integer variables (`currentSum` and `maxSum`). We do not need an entirely new array to store previous computations, keeping the extra space strictly constant.
