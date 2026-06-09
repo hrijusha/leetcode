@@ -36,9 +36,8 @@
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> If you have figured out the <code>O(n)</code> solution, try coding another solution using the <strong>divide and conquer</strong> approach, which is more subtle.</p>
 
-# Approach: Kadane's Algorithm
-The brute force way to solve this is to calculate the sum of every possible subarray, which takes `O(N^2)` time. Kadane's Algorithm allows us to do this in a single pass by making a localized decision at every single number we visit.
-
+## Approach
+The brute force way to solve this is to calculate the sum of every possible subarray, which takes `O(N^2)` time. 
 **Core Logic:**
 1. **The Choice:** As we iterate through the array, for every number `nums[i]`, we have to make a choice:
    * Do we add this number to our existing running subarray?
