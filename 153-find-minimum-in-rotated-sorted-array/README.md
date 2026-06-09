@@ -46,3 +46,19 @@
 	<li>All the integers of <code>nums</code> are <strong>unique</strong>.</li>
 	<li><code>nums</code> is sorted and rotated between <code>1</code> and <code>n</code> times.</li>
 </ul>
+
+## Approach: Modified Binary Search
+Because the array was originally sorted, finding the minimum element is equivalent to finding the "pivot" point where the rotation occurred (the point where the numbers drop from high to low). Since the required time complexity is `O(log n)`, we must use Binary Search.
+
+**Core Logic:**
+1. **Pointers:** Initialize a `left` pointer at the start of the array and a `right` pointer at the end.
+2. **The Condition (`left < right`):** We use `left < right` instead of `left <= right` because we are narrowing down a range to find a single element. When `left` equals `right`, we have narrowed the search space down to one item, which must be our minimum.
+3. **The Comparison:** At each step, we calculate the `mid` index and compare `nums[mid]` against `nums[right]`. 
+   * **Case 1: `nums[mid] > nums[right]`**
+     This implies the right half of the array is unsorted (it contains the pivot point). The minimum *must* be to the right of `mid`. We update `left = mid + 1`.
+   * **Case 2: `nums[mid] <= nums[right]`**
+     This implies the right half of the array is perfectly sorted. Therefore, the minimum must be in the left half. However, `mid` itself could be the minimum, so we cannot skip it. We update `right = mid`.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(log N)`** Where `N` is the number of elements in the array. In each iteration of the `while` loop, we cut the search space in half.
+* **Space Complexity:** **`O(1)`** We only allocate a few integer variables (`left`, `right`, `mid`), strictly requiring constant extra memory.
