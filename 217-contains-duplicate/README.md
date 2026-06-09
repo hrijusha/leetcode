@@ -42,7 +42,12 @@
 </ul>
 
 **Core Logic:**
-Use set. If set.add() returns false then number is a duplicate, return true if you find a duplicate. If there is no duplicate after the whole for loop then return false.
+
+In Java, the `Set.add()` method returns a boolean value. 
+   * It returns `true` if the set did not already contain the specified element and successfully added it.
+   * It returns `false` if the set already contained the element.
+
+By placing `!set.add(num)` directly inside our `if` statement, we simultaneously attempt to add the number *and* check if it's a duplicate. If it returns `false` (meaning it was a duplicate), the `!` flips it to `true`, and we immediately break the loop and return `true`. If there is no duplicate after the whole for loop then return false.
 
 ## Complexity Analysis
 * **Time Complexity:** **`O(N)`** Where `N` is the number of elements in the array. We process every element in the array exactly once in a single `for` loop.
