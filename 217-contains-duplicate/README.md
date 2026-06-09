@@ -40,3 +40,10 @@
 	<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
 	<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
 </ul>
+
+**Core Logic:**
+Use set. If set.add() returns false then number is a duplicate, return true if you find a duplicate. If there is no duplicate after the whole for loop then return false.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** Where `N` is the number of elements in the array. We process every element in the array exactly once in a single `for` loop.
+* **Space Complexity:** **`O(N)`** In the worst-case scenario (no duplicates), we will end up storing every single number from the array inside our Hash Set, requiring memory proportional to the size of the input.
