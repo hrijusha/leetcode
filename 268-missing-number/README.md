@@ -67,3 +67,16 @@
 
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> Could you implement a solution using only <code>O(1)</code> extra space complexity and <code>O(n)</code> runtime complexity?</p>
+
+## Approach: Hash Set (Tracking Seen Numbers)
+The easiest way to find out what is missing is to keep a record of everything we have. We can use a Hash Set to store all the numbers present in the array, which allows us to instantly check if a specific number exists later.
+
+**Core Logic:**
+1. **State Tracking:** Create a `HashSet`.
+2. **First Pass (Populate):** Iterate through every number in the given `nums` array and add it to our set.
+3. **Second Pass (Verify):** We know the array is supposed to contain numbers from `0` to `n` (where `n` is the length of the array). We write a loop from `0` up to `n`.
+4. **The Check:** For each number `i` in that range, we ask our Hash Set: "Do you contain this number?". The first time the set says "no" (`!set.contains(i)`), we know we have found our missing number and can return it immediately.
+
+## Complexity Analysis
+* **Time Complexity:** **`O(N)`** Where `N` is the length of the `nums` array. We iterate through the array once to build the set `O(N)`, and then we iterate up to `N + 1` times to find the missing number `O(N)`. Hash Set insertions and lookups take `O(1)` time on average, keeping the overall time linear.
+* **Space Complexity:** **`O(N)`** We must store every single element of the array inside our Hash Set, requiring memory directly proportional to the size of the input array.
