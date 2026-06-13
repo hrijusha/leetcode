@@ -23,3 +23,23 @@
 
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong>&nbsp;Can you solve the problem in <code>O(1)</code>&nbsp;extra&nbsp;space complexity? (The output array <strong>does not</strong> count as extra space for space complexity analysis.)</p>
+
+```java
+//Brute force
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int[] result = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            int product = 1;
+            for (int j = 0; j < nums.length; j++) {
+                if (j != i) {
+                    product = product * nums[j];
+                }
+            }
+            result[i] = product;
+        }
+        return result;
+
+    }
+}
+```
