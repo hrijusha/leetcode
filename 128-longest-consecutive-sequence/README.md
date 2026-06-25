@@ -73,14 +73,10 @@ class Solution {
 ## ⏱️ Complexity Analysis
 
 ### Time Complexity: $\mathcal{O}(n^3)$
-The time complexity is cubic due to three nested operations:
-* **Outer Loop:** Iterates through each of the $n$ elements in the array, contributing $\mathcal{O}(n)$.
-* **Inner Loop:** In the worst-case scenario (e.g., if the array is already one long consecutive sequence), the `while` loop can run up to $n$ times for a given element, contributing another $\mathcal{O}(n)$.
-* **Linear Search:** Inside the `while` loop, checking if the array contains the next consecutive number requires a linear scan of the entire array, taking an additional $\mathcal{O}(n)$ time.
-* **Total Operations:** $\mathcal{O}(n) \times \mathcal{O}(n) \times \mathcal{O}(n) = \mathcal{O}(n^3)$.
+The overall time complexity is dominated by the sorting step. Here is the line-by-line breakdown:Arrays.sort(nums);: Sorting an array of primitive integers in Java uses a Dual-Pivot Quicksort algorithm. This takes $O(N \log N)$ time, where $N$ is the length of the array.The for loop: Iterating through the sorted array to count the streaks takes $O(N)$ time, as it visits each element exactly once.Total Time: $O(N \log N) + O(N)$ simplifies to $O(N \log N)$.
 
 ### Space Complexity: $\mathcal{O}(1)$
-* **Auxiliary Space:** The algorithm only uses a few primitive variables (`maxLength`, `currentNum`, `currentLength`) to keep track of the counts. It does not allocate any additional data structures that scale with the input size $n$, resulting in constant auxiliary space.
+Space Complexity: $O(\log N)$While your algorithm doesn't explicitly allocate any new data structures (like arrays or hash maps), the space complexity is not strictly $O(1)$ because of the sorting function.Sorting overhead: Java's Arrays.sort() for primitive types is an in-place sort, but the recursive nature of the Dual-Pivot Quicksort algorithm requires auxiliary space on the call stack. This takes $O(\log N)$ space.Variables: The variables longestStreak, currentStreak, and i only use a constant amount of space, $O(1)$.Total Space: $O(\log N)$.
 
 ## Optimised Approach
 Sorting an array is out of question because the solution has to be in O(n) time. Hashset was used because searching time complexity is O(1). 
