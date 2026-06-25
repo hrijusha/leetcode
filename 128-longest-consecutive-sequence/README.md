@@ -72,10 +72,10 @@ class Solution {
 ```
 ## ⏱️ Complexity Analysis
 
-### Time Complexity: $\mathcal{O}(n^3)$
+### Time Complexity: $\mathcal{O}(NlogN)$
 The overall time complexity is dominated by the sorting step. Here is the line-by-line breakdown:Arrays.sort(nums);: Sorting an array of primitive integers in Java uses a Dual-Pivot Quicksort algorithm. This takes $O(N \log N)$ time, where $N$ is the length of the array.The for loop: Iterating through the sorted array to count the streaks takes $O(N)$ time, as it visits each element exactly once.Total Time: $O(N \log N) + O(N)$ simplifies to $O(N \log N)$.
 
-### Space Complexity: $\mathcal{O}(1)$
+### Space Complexity: $\mathcal{O}(logN)$
 Space Complexity: $O(\log N)$While your algorithm doesn't explicitly allocate any new data structures (like arrays or hash maps), the space complexity is not strictly $O(1)$ because of the sorting function.Sorting overhead: Java's Arrays.sort() for primitive types is an in-place sort, but the recursive nature of the Dual-Pivot Quicksort algorithm requires auxiliary space on the call stack. This takes $O(\log N)$ space.Variables: The variables longestStreak, currentStreak, and i only use a constant amount of space, $O(1)$.Total Space: $O(\log N)$.
 
 ## Optimised Approach
