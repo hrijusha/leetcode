@@ -37,3 +37,21 @@
 
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> Your algorithm&#39;s time complexity must be better than <code>O(n log n)</code>, where n is the array&#39;s size.</p>
+
+## 💡 Solution Approach
+
+This solution utilizes a **Hash Map** combined with **Java Streams** to count, sort, and extract the most frequent elements. 
+
+Here is the step-by-step breakdown of the algorithm:
+1. **Frequency Counting:** Iterate through the `nums` array and use a `HashMap` to store each unique number as the key and its frequency (count) as the value.
+2. **Sorting by Frequency:** Convert the map's entry set into a Java Stream. Sort these entries in **descending order** based on their values (frequencies).
+3. **Key Extraction:** After sorting, map the entries to extract only their keys and collect them into a `List`.
+4. **Formatting the Output:** Iterate $k$ times to copy the top $k$ elements from the sorted list into a standard integer array, which is then returned.
+
+## 📊 Complexity Analysis
+
+* **Time Complexity:** $O(N \log N)$
+  * Iterating through the array to populate the map takes $O(N)$ time, where $N$ is the total number of elements in `nums`.
+  * Sorting the map entries using Java Streams takes $O(U \log U)$ time, where $U$ is the number of *unique* elements. In the worst-case scenario (where all elements are unique), this bounds the overall time complexity to $O(N \log N)$.
+* **Space Complexity:** $O(N)$
+  * The `HashMap` and the intermediate `List` will store up to $N$ unique elements. Therefore, the memory footprint scales linearly with the size of the input array.
