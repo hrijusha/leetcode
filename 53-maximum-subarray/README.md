@@ -38,6 +38,7 @@
 
 ## Approach
 The brute force way to solve this is to calculate the sum of every possible subarray, which takes `O(N^2)` time. 
+
 **Core Logic:**
 1. **The Choice:** As we iterate through the array, for every number `nums[i]`, we have to make a choice:
    * Do we add this number to our existing running subarray?
