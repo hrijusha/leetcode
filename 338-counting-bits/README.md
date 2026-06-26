@@ -56,7 +56,7 @@ Here is the step-by-step breakdown of the algorithm:
 * **Time Complexity:** $O(n \log n)$
   * The `for` loop iterates $n + 1$ times, which gives $O(n)$.
   * Inside the loop, `Integer.toBinaryString(i)` and the `String.replace()` operations iterate over the characters of the binary string. The length of a binary string for a number $i$ is proportional to $\log i$. 
-  * Therefore, performing $O(\log n)$ string operations $n$ times results in an overall time complexity of $O(n \log n)$. *(Note: While a dynamic programming approach can achieve this in $O(n)$ time, this string-based approach is highly readable).*
+  * Therefore, performing $O(\log n)$ string operations $n$ times results in an overall time complexity of $O(n \log n)$.
 * **Space Complexity:** $O(n)$
   * **Output Space:** The `result` array requires $O(n)$ space to store the answers.
   * **Auxiliary Space:** $O(\log n)$ space is temporarily used during each iteration to store the binary string representations before they are garbage collected. Overall space complexity is dominated by the output array, making it $O(n)$.
