@@ -41,3 +41,30 @@
 	<li><code>0 &lt;= strs[i].length &lt;= 100</code></li>
 	<li><code>strs[i]</code> consists of lowercase English letters.</li>
 </ul>
+
+## 🧠 Approach: Categorization by Sorting
+
+The core property of anagrams is that they are composed of the exact same characters, just in a different order. Therefore, if we take two anagrams (like `"eat"` and `"tea"`) and sort their characters alphabetically, they will both result in the exact same string (`"aet"`).
+
+We can use this sorted string as a unique "signature" or "key". By using a HashMap, we can group all the original strings that share the same sorted signature together in a list.
+
+### Algorithm
+1. Initialize a `HashMap` where the key is a `String` (the sorted signature) and the value is a `List<String>` (the grouped anagrams).
+2. Iterate through each string `str` in the input array `strs`.
+3. Convert the current string into a character array, sort it, and convert it back to a string (`sortedString`).
+4. Check if `sortedString` already exists in the map:
+   - If it does, retrieve the corresponding list and add the original `str` to it.
+   - If it doesn't, create a new list, add the original `str`, and put the new key-value pair into the map.
+5. Extract all the grouped lists from the map using `map.values()` and return them as a `List<List<String>>`.
+
+> **💡 Java Pro-Tip:** In modern Java (Java 8+), your entire `if/else` block for checking and updating the map can be condensed into a single line using `computeIfAbsent`:
+> `map.computeIfAbsent(sortedString, k -> new ArrayList<>()).add(str);`
+
+## ⏱️ Complexity Analysis
+
+* **Time Complexity:** `O(N * K log K)`
+  * Where `N` is the total number of strings in the input array, and `K` is the maximum length of a string.
+  * We iterate through the array of `N` strings once. For each string, sorting the character array takes `O(K log K)` time. 
+* **Space Complexity:** `O(N * K)`
+  * Where `N` is the number of strings and `K` is the maximum length of a string.
+  * In the worst-case scenario, the HashMap will store every single string inside its lists, and the sorted string keys will also take up space in memory.
