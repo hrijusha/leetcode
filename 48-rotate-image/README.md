@@ -25,3 +25,20 @@
 	<li><code>1 &lt;= n &lt;= 20</code></li>
 	<li><code>-1000 &lt;= matrix[i][j] &lt;= 1000</code></li>
 </ul>
+
+## Approach
+
+To rotate an $N \times N$ matrix by 90 degrees clockwise **in-place** (without allocating a new matrix), we can use a highly elegant two-step mathematical trick:
+
+1. **Transpose the Matrix:** We convert all rows into columns (and vice versa) by swapping `matrix[i][j]` with `matrix[j][i]`. 
+   *Note:* The inner loop starts at `j = i` (the diagonal) to ensure we only swap elements in the upper triangle with the lower triangle. Starting at `j = 0` would cause a double-swap, reverting the matrix to its original state.
+2. **Reverse Each Row:** Once the matrix is transposed, the elements are in the correct rows but in the reverse order. We iterate through each row and swap elements from the left side with the corresponding elements on the right side (`matrix[i][j]` with `matrix[i][n - 1 - j]`), stopping at the middle column.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(N^2)$
+  * Transposing the matrix touches roughly half the elements, taking $O(N^2)$ time.
+  * Reversing the rows also touches half the elements, taking $O(N^2)$ time.
+  * Dropping the constants, the total time complexity scales linearly with the total number of cells in the matrix (where total cells $= N \times N$).
+* **Space Complexity:** $O(1)$
+  * The operation is performed strictly in-place. No secondary matrices or dynamically sized data structures are allocated. The only extra space used is for a few primitive integer variables (`temp`, `i`, `j`, `n`).
