@@ -33,3 +33,24 @@
 	<li><code>intervals[i].length == 2</code></li>
 	<li><code>0 &lt;= start<sub>i</sub> &lt;= end<sub>i</sub> &lt;= 10<sup>4</sup></code></li>
 </ul>
+
+## Approach
+This solution uses a **Sorting** approach combined with a linear scan to efficiently merge overlaps:
+
+1. **Sort the Intervals:** The array is first sorted in ascending order based on the starting point of each interval. This guarantees that any overlapping intervals will be adjacent to each other in our sorted list.
+2. **Track the Current Interval:** We initialize `prevStart` and `prevEnd` with the start and end values of the very first interval. We also create an empty `ArrayList` to store our final merged intervals.
+3. **Iterate and Merge:** We loop through the rest of the intervals one by one:
+   * **If they overlap** (current `start` $\le$ `prevEnd`): We merge them by updating `prevEnd` to be the maximum of the current `prevEnd` and the current interval's `end`.
+   * **If they don't overlap:** The previous interval is fully merged and finalized. We add `[prevStart, prevEnd]` to our result list, and reset `prevStart` and `prevEnd` to match the new, current interval.
+4. **Finalize:** Once the loop completes, we add the final tracked interval to the list and convert the `ArrayList` back into a 2D array to return it.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(N \log N)$
+  * Sorting the array of intervals takes $O(N \log N)$ time, where $N$ is the total number of intervals. 
+  * The linear scan to merge the intervals takes $O(N)$ time. 
+  * Because $O(N \log N)$ grows faster than $O(N)$, the sorting step dominates the overall time complexity.
+
+* **Space Complexity:** $O(N)$
+  * We use an `ArrayList` to store the merged intervals before converting them back to an array. In the worst-case scenario (where absolutely no intervals overlap), this list will store all $N$ intervals, requiring $O(N)$ extra space.
+  * *(Note: The sorting algorithm used by `Arrays.sort()` may also consume up to $O(N)$ auxiliary space depending on the data type and underlying implementation).*
