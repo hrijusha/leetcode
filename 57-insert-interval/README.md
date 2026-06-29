@@ -33,3 +33,21 @@
 	<li><code>newInterval.length == 2</code></li>
 	<li><code>0 &lt;= start &lt;= end &lt;= 10<sup>5</sup></code></li>
 </ul>
+
+## Approach
+
+Since the provided `intervals` array is already sorted and non-overlapping, this solution uses a highly efficient **Three-Phase Linear Scan** to insert and merge the new interval:
+
+1. **Phase 1: Add Non-overlapping Left Intervals**
+   We iterate through the array and add all intervals that end strictly *before* the `newInterval` starts. Because the array is sorted, these are guaranteed not to overlap.
+2. **Phase 2: Merge Overlapping Intervals**
+   As long as the current interval starts *before or exactly when* the `newInterval` ends, an overlap exists. We continuously expand our `newInterval` to encompass these overlaps by updating its start to the minimum start value and its end to the maximum end value. Once the overlaps stop, we add this fully merged `newInterval` to our result list.
+3. **Phase 3: Add Non-overlapping Right Intervals**
+   We take all remaining intervals in the array (which are guaranteed to start *after* our merged interval ends) and append them directly to the result list.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(N)$
+  * We process the `intervals` array in a single pass. Even though there are three separate `while` loops, the index `i` is only incremented sequentially from $0$ to $N$, meaning every interval is visited exactly once.
+* **Space Complexity:** $O(N)$
+  * We use an `ArrayList` to store the newly constructed intervals. In the worst-case scenario (e.g., no overlaps occur), this list will contain $N + 1$ elements, scaling linearly with the input size.
