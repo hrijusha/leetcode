@@ -51,3 +51,20 @@ The brute force way to solve this is to calculate the sum of every possible suba
 ## Complexity Analysis
 * **Time Complexity:** **`O(N)`** Where `N` is the number of elements in the array. We process every element in the array exactly once in a single `for` loop.
 * **Space Complexity:** **`O(1)`** We optimize our space footprint by only maintaining two integer variables (`currentSum` and `maxSum`). We do not need an entirely new array to store previous computations, keeping the extra space strictly constant.
+```java
+//brute force
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int n = nums.length;
+        int maxSum = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            int currentSum = 0;
+            for (int j = i; j < n; j++) {
+                currentSum += nums[j];
+                maxSum = Math.max(currentSum, maxSum);
+            }
+        }
+        return maxSum;
+    }
+}
+```
