@@ -42,3 +42,20 @@
 ## Complexity Analysis
 * **Time Complexity:** **`O(N)`** We iterate through the given array of length *N* exactly once. All operations inside the loop (comparisons and basic arithmetic) execute in constant time `O(1)`.
 * **Space Complexity:** **`O(1)`** We optimize the space complexity by only tracking a few integer variables (`max`, `min`, `tempMax`, and `maxP`) at each step rather than maintaining an entire dynamic programming array. This requires strictly constant extra space.
+
+```java
+//brute force
+class Solution {
+    public int maxProduct(int[] nums) {
+        int maxProduct = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            int product =1;
+            for (int j = i; j < nums.length; j++) {
+                product = product*nums[j];
+                maxProduct = Math.max(product, maxProduct);
+            }
+        }
+        return maxProduct;
+    }
+}
+```
