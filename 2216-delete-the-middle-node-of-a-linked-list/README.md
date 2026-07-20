@@ -45,3 +45,26 @@ Node 0 with value 2 is the only node remaining after removing node 1.</pre>
 	<li>The number of nodes in the list is in the range <code>[1, 10<sup>5</sup>]</code>.</li>
 	<li><code>1 &lt;= Node.val &lt;= 10<sup>5</sup></code></li>
 </ul>
+
+## Approach: Fast and Slow Pointers (Tortoise and Hare)
+
+This solution uses the classic two-pointer technique to find and remove the middle node of a singly linked list in a single pass. 
+
+1. **Base Case Handling:** 
+   If the linked list has only one node (`head.next == null`), there is no middle node to leave behind, so the list becomes empty. We simply return `null`.
+2. **Pointer Initialization (The Trick):** 
+   Normally, to find the exact middle of a list, both `slow` and `fast` start at the `head`. However, to *delete* a node in a singly linked list, we need our pointer to stop at the node **just before** the one we want to delete. 
+   To achieve this, we give the `fast` pointer a head start by initializing it to `head.next.next`, while `slow` starts at `head`. This artificial lag ensures that when `fast` reaches the end of the list, `slow` will be pointing to the predecessor of the middle node.
+3. **Traversal:** 
+   We iterate through the list, moving the `fast` pointer two steps at a time (`fast = fast.next.next`) and the `slow` pointer one step at a time (`slow = slow.next`). We continue this until `fast` either reaches the last node or drops off the end of the list (`null`).
+4. **Deletion:** 
+   Once the loop terminates, `slow` is sitting exactly one node before the middle node. We delete the middle node by bypassing it: `slow.next = slow.next.next`. 
+5. **Final Result:** 
+   We return the original `head` of the modified list.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(n)$
+  Where $n$ is the number of nodes in the linked list. The `fast` pointer traverses the list by jumping two nodes at a time, meaning the loop runs approximately $n/2$ times. This simplifies to a linear time complexity of $O(n)$.
+* **Space Complexity:** $O(1)$
+  We only use two extra pointers (`slow` and `fast`) to traverse the list. The deletion is done entirely in-place by rearranging pointers, requiring constant auxiliary space.
