@@ -26,3 +26,33 @@
 	<li>The number of nodes in the tree is in the range <code>[0, 10<sup>4</sup>]</code>.</li>
 	<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
 </ul>
+
+## Approach: Breadth-First Search (Level-Order Traversal)
+
+This solution uses a Queue-based Breadth-First Search (BFS) to both serialize the tree into a string and deserialize the string back into a tree. We process the nodes level by level.
+
+### 1. Serialization (Tree to String)
+*   **Initialization:** We use a `Queue` for our level-order traversal and a `StringBuilder` to construct the serialized sequence. If the tree is empty, we return an empty string.
+*   **Traversal:** We start by adding the `root` to the queue. While the queue is not empty, we poll the front node.
+*   **Encoding:** 
+    *   If the node is `null`, we append `"N,"` to represent a missing child. We do not add anything to the queue.
+    *   If the node is not `null`, we append its integer value followed by a comma (e.g., `"5,"`). Then, we push both its `left` and `right` children into the queue (even if they are `null`, so we can accurately record the tree's structure on the next level).
+*   **Result:** This produces a comma-separated string representing the tree level by level, including placeholders for nulls.
+
+### 2. Deserialization (String to Tree)
+*   **Initialization:** If the input string is empty, we return `null`. Otherwise, we split the string by commas into an array of strings called `values`. We create the `root` node using the first value and add it to a `Queue`.
+*   **Reconstruction:** We use an index `i` (starting at $1$) to iterate through the `values` array.
+*   **Parent-Child Mapping:** While the queue is not empty, we poll a `parent` node. 
+    *   We check the current string at index `i`. If it's not `"N"`, we create a new `TreeNode` for the left child, attach it to `parent.left`, and add it to the queue. We increment `i`.
+    *   We check the next string at index `i`. If it's not `"N"`, we create a new `TreeNode` for the right child, attach it to `parent.right`, and add it to the queue. We increment `i`.
+*   **Result:** The queue ensures that we attach children to the correct parents in the exact same level-order sequence they were serialized.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(N)$
+  Where $N$ is the total number of nodes in the binary tree. 
+  * In `serialize`, we visit each node exactly once. Appending to a `StringBuilder` is an $O(1)$ operation, leading to $O(N)$ time.
+  * In `deserialize`, string splitting takes $O(N)$ time. We then iterate through the array of values exactly once, doing constant time operations to create nodes and assign pointers, which also takes $O(N)$ time.
+* **Space Complexity:** $O(N)$
+  * In `serialize`, the `Queue` will hold at most all the nodes at the deepest level of the tree. In the worst case (a perfectly balanced tree), the bottom level holds roughly $N/2$ nodes, requiring $O(N)$ space. The `StringBuilder` also requires $O(N)$ space to hold the output string.
+  * In `deserialize`, creating the `values` array by splitting the string takes $O(N)$ space. The `Queue` used for reconstruction also takes up to $O(N)$ space.
