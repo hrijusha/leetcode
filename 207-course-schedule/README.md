@@ -35,3 +35,27 @@ To take course 1 you should have finished course 0, and to take course 0 you sho
 	<li><code>0 &lt;= a<sub>i</sub>, b<sub>i</sub> &lt; numCourses</code></li>
 	<li>All the pairs prerequisites[i] are <strong>unique</strong>.</li>
 </ul>
+
+## Approach: Topological Sort (Kahn's Algorithm)
+
+This solution models the course prerequisites as a Directed Graph and uses Kahn's Algorithm (BFS-based Topological Sorting) to detect if a cycle exists. If a cycle exists (e.g., Course A requires B, and B requires A), it is impossible to finish all courses.
+
+1. **Graph Representation:** 
+   We represent the courses and prerequisites using an adjacency list (`adj`). A directed edge from `u` to `v` means course `u` is a prerequisite for course `v`. We also maintain an `inDegree` array to track how many prerequisites each course currently has.
+2. **Graph Construction:** 
+   We iterate through the `prerequisites` array. For each pair `[to, from]`, we add an edge from `from` to `to` in our adjacency list and increment the `inDegree` of the `to` course.
+3. **Initialization (Finding Starting Points):** 
+   We scan the `inDegree` array and add all courses with an in-degree of $0$ to a Queue (`q`). These are courses with no prerequisites, meaning they can be taken immediately.
+4. **BFS Traversal (Processing Courses):** 
+   While the queue is not empty, we pop a course and add it to our processed `list` (simulating taking the course). Then, we iterate through all of its dependent `neighbors` in the adjacency list. Since we just "completed" their prerequisite, we decrement the in-degree of each neighbor. If a neighbor's in-degree drops to $0$, it means all of its prerequisites are fulfilled, so we push it into the queue.
+5. **Cycle Detection (Final Result):** 
+   After the BFS finishes, we check how many courses were successfully processed (the size of `list`). If `list.size() == numCourses`, it means we were able to topologically sort the entire graph (no cycles), and we return `true`. If the count is less than `numCourses`, a cycle exists, blocking completion, and we return `false`.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(V + E)$
+  Where $V$ is the number of vertices (`numCourses`) and $E$ is the number of edges (length of the `prerequisites` array). Building the adjacency list and the `inDegree` array takes $O(V + E)$ time. During the BFS, every vertex is pushed and popped from the queue exactly once, and every edge is traversed exactly once, which also takes $O(V + E)$ time.
+* **Space Complexity:** $O(V + E)$
+  * The adjacency list `adj` stores all vertices and edges, taking $O(V + E)$ space.
+  * The `inDegree` array, the Queue `q`, and the processed `list` each require $O(V)$ space.
+  * The dominant term is the adjacency list, resulting in an overall space complexity of $O(V + E)$.
