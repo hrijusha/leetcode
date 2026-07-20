@@ -29,3 +29,25 @@
 <ul>
 	<li><code>1 &lt;= m, n &lt;= 100</code></li>
 </ul>
+
+## Approach: Top-Down Dynamic Programming (Memoization)
+
+This solution uses a recursive Depth-First Search (DFS) approach with memoization (Top-Down DP) to find the number of unique paths from the top-left to the bottom-right of an $m \times n$ grid.
+
+1. **State Definition:** 
+   We define a recursive function `findPaths(m, n)` that returns the total number of unique paths for a grid of size $m \times n$. We use a 2D array `dp` of size `(m+1) x (n+1)` to cache our computed results.
+2. **Base Case:** 
+   If either `m == 1` or `n == 1`, it means the grid has been reduced to a single row or a single column. There is only $1$ possible path to traverse a straight line, so we return $1$.
+3. **Memoization (Caching):** 
+   Before performing any recursive calculations, we check if `dp[m][n]` is greater than $0$. If it is, this subproblem has already been solved, and we can return the cached value immediately in order to eliminate redundant recursive calls.
+4. **State Transition:** 
+   To reach the end of an $m \times n$ grid, you must come from either the cell directly above it or the cell directly to its left. Therefore, the total unique paths for the current grid size is the sum of the paths for a grid with one less row plus a grid with one less column. 
+   The recurrence relation is:
+   $$dp[m][n] = \text{findPaths}(m - 1, n) + \text{findPaths}(m, n - 1)$$
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(m \cdot n)$
+  Because we cache the results in our `dp` array, each subproblem (or grid state) is evaluated exactly once. There are $m \times n$ possible states, so the time complexity drops from an exponential $O(2^{m+n})$ (standard recursion) to linear with respect to the grid area.
+* **Space Complexity:** $O(m \cdot n)$
+  We allocate a 2D array `dp` of size $(m+1) \times (n+1)$, which takes $O(m \cdot n)$ extra space. Additionally, the maximum depth of the recursion stack will be $m + n$ before hitting the base cases, which takes $O(m + n)$ space. The dominant term is the 2D array, yielding an overall space complexity of $O(m \cdot n)$.
