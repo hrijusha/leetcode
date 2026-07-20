@@ -30,3 +30,26 @@
 <ul>
 	<li><code>1 &lt;= n &lt;= 45</code></li>
 </ul>
+
+## Approach: Top-Down Dynamic Programming (Memoization)
+
+This solution uses a recursive approach combined with memoization (Top-Down DP) to find the number of distinct ways to climb to the top of a staircase with `n` steps.
+
+1. **State Definition:** 
+   We define a recursive helper function `climb(n)` that returns the total number of unique ways to reach step `n`. We use a 1D array `dp` of size `n + 1` to cache our calculated results.
+2. **Base Cases:** 
+   * If `n < 0`, it means we took a step that bypassed the bottom of the stairs. This is an invalid path, so we return 0.
+   * If `n == 0`, it means we are exactly at the starting point. There is exactly 1 way to be at the start (by taking zero steps), so we return 1.
+3. **Memoization (Caching):** 
+   Before making any recursive calls, we check if `dp[n] > 0`. If so, we have already computed the number of ways to reach step `n`, and we return the cached value directly to avoid redundant calculations.
+4. **State Transition:** 
+   Because you can only climb 1 or 2 steps at a time, the number of ways to reach step `n` is the sum of the ways to reach the step right below it (`n - 1`) and the step two levels below it (`n - 2`).
+   The recurrence relation is:
+   $$dp[n] = \text{climb}(n - 1) + \text{climb}(n - 2)$$
+
+## Complexity Analysis
+
+* **Time Complexity:** O(n)
+  Because we cache the results in the `dp` array, the number of ways to reach each step from $1$ to $n$ is calculated exactly once. The recursion tree is pruned, reducing the time complexity from an exponential $O(2^n)$ down to linear time.
+* **Space Complexity:** O(n)
+  We use an extra 1D array `dp` of size `n + 1` which takes O(n) space. Additionally, the maximum depth of the recursive call stack will be `n` before hitting the base cases, which also requires O(n) space. The overall space complexity is O(n).
