@@ -35,3 +35,25 @@
 	<li><code>intervals[i].length == 2</code></li>
 	<li><code>-5 * 10<sup>4</sup> &lt;= start<sub>i</sub> &lt; end<sub>i</sub> &lt;= 5 * 10<sup>4</sup></code></li>
 </ul>
+
+## Approach: Greedy Algorithm
+
+This solution uses a Greedy approach to find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping. The core idea is to always keep the interval that ends the earliest, as it leaves the most room for subsequent intervals.
+
+1. **Sorting (The Greedy Choice):** 
+   We sort the `intervals` array based on their **end times** in ascending order. By picking intervals that end as early as possible, we maximize the available space for future intervals (which minimizes the number of removals needed).
+2. **Initialization:** 
+   We keep track of the end time of the last safely kept interval using `prevEnd` (initialized to the end time of the very first interval). We also initialize a `count` to $0$ to track how many intervals we must erase.
+3. **Iteration and Overlap Detection:** 
+   We iterate through the remaining intervals starting from index $1$. For each interval, we compare its start time (`currStart`) with the end time of the last kept interval (`prevEnd`).
+   * **Overlap:** If `currStart < prevEnd`, the current interval overlaps with the previously kept one. Because we sorted by end times, the current interval ends after (or at the same time as) `prevEnd`. To minimize removals, we keep the previous interval and "erase" the current one by incrementing `count`.
+   * **No Overlap:** If `currStart >= prevEnd`, there is no overlap. We can safely keep this current interval. We update `prevEnd` to be the current interval's end time (`currEnd`) and move forward. 
+4. **Final Result:** 
+   After evaluating all intervals, `count` will hold the minimum number of overlapping intervals we had to skip/erase.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(N \log N)$
+  Where $N$ is the number of intervals. Sorting the 2D array dominates the time complexity, taking $O(N \log N)$ time. The subsequent iteration through the array requires a single pass, which takes $O(N)$ time.
+* **Space Complexity:** $O(\log N)$ to $O(N)$
+  We do not allocate any additional data structures that scale with the input size. However, the space complexity depends on the underlying sorting algorithm used by the language (in Java, `Arrays.sort()` on objects/2D arrays uses TimSort, which can require up to $O(N)$ auxiliary space in the worst case, though average-case space overhead for general sorting is often considered $O(\log N)$).
