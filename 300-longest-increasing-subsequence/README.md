@@ -33,3 +33,26 @@
 
 <p>&nbsp;</p>
 <p><b>Follow up:</b>&nbsp;Can you come up with an algorithm that runs in&nbsp;<code>O(n log(n))</code> time complexity?</p>
+
+## Approach: Dynamic Programming
+
+This solution uses a Bottom-Up Dynamic Programming approach to find the length of the longest strictly increasing subsequence.
+
+1. **State Definition:** 
+   We use an array `dp` of the same length as the input array `nums`. The value at `dp[i]` represents the length of the longest increasing subsequence that strictly *ends* at index `i`.
+2. **Initialization:** 
+   Every single element is intrinsically a valid increasing subsequence of length $1$ (itself). Therefore, we initialize the entire `dp` array with $1$. We also maintain a `maxLength` variable, initialized to $1$, to track the global maximum length found.
+3. **State Transition:** 
+   We use two nested loops. The outer loop `i` iterates through the array from the second element to the end. The inner loop `j` looks back at all previous elements (from index $0$ to $i-1$).
+   * If we find a previous element that is strictly smaller than the current element (`nums[i] > nums[j]`), it means we can extend the subsequence ending at `j` by appending `nums[i]`.
+   * The recurrence relation is:
+     $$dp[i] = \max(dp[i], dp[j] + 1)$$
+4. **Final Result:** 
+   As we build up the `dp` array, we continuously update our `maxLength` variable with the highest value seen so far. Finally, we return `maxLength`, which holds the length of the longest increasing subsequence in the entire array.
+
+## Complexity Analysis
+
+* **Time Complexity:** $O(n^2)$
+  Where $n$ is the length of the `nums` array. We have two nested loops: the outer loop iterates $n$ times, and for each iteration $i$, the inner loop iterates $i$ times. This results in $1 + 2 + 3 + \dots + (n-1)$ operations, which simplifies to $O(n^2)$.
+* **Space Complexity:** $O(n)$
+  Where $n$ is the length of the `nums` array. We require an additional 1D array `dp` of size $n$ to store the length of the longest increasing subsequence up to each index.
