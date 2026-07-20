@@ -48,3 +48,29 @@ medianFinder.findMedian(); // return 2.0
 	<li>If all integer numbers from the stream are in the range <code>[0, 100]</code>, how would you optimize your solution?</li>
 	<li>If <code>99%</code> of all integer numbers from the stream are in the range <code>[0, 100]</code>, how would you optimize your solution?</li>
 </ul>
+
+## Approach: Two Heaps (Min-Heap and Max-Heap)
+
+This solution uses two priority queues to maintain a running median. The core idea is to split the incoming data stream into two halves: a lower half and an upper half. 
+
+1. **State Definition:** 
+   * `leftHeap` (Max-Heap): Stores the smaller half of the numbers. The root (peek) will always be the largest number in this lower half.
+   * `rightHeap` (Min-Heap): Stores the larger half of the numbers. The root (peek) will always be the smallest number in this upper half.
+2. **Adding a Number (`addNum`):** 
+   To maintain the correct order and balance, inserting a number is a three-step process:
+   * **Insert:** We first add the new number to the `leftHeap` (the smaller half).
+   * **Rebalance Values:** To ensure that all numbers in the `leftHeap` are truly smaller than or equal to the numbers in the `rightHeap`, we immediately remove the largest element from `leftHeap` and push it into the `rightHeap`.
+   * **Rebalance Sizes:** We want to enforce a size constraint where `leftHeap` is always either equal in size to `rightHeap`, or exactly $1$ element larger. If the `rightHeap` becomes larger than the `leftHeap` during the previous step, we pop the smallest element from `rightHeap` and move it back to `leftHeap`.
+3. **Finding the Median (`findMedian`):** 
+   * If the total amount of numbers is odd, `leftHeap` will have exactly one more element than `rightHeap` due to our size constraint. The median is simply the top element of `leftHeap`.
+   * If the total amount of numbers is even, both heaps are of equal size. The median is the average of the two middle values, which are readily available at the top of `leftHeap` and the top of `rightHeap`.
+
+## Complexity Analysis
+
+* **Time Complexity:** 
+  * `addNum(int num)`: $O(\log n)$
+    Where $n$ is the total number of elements added so far. In the worst case, we perform three heap operations (insertions and extractions). Adding to or extracting from a Priority Queue takes logarithmic time $O(\log n)$.
+  * `findMedian()`: $O(1)$
+    Retrieving the median only requires peeking at the root of one or both heaps, which is a constant time operation.
+* **Space Complexity:** $O(n)$
+  Where $n$ is the total number of elements added from the data stream. All elements are stored across the two priority queues, taking linear auxiliary space.
