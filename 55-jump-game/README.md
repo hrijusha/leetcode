@@ -26,21 +26,31 @@
 	<li><code>1 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>
 	<li><code>0 &lt;= nums[i] &lt;= 10<sup>5</sup></code></li>
 </ul>
-Approach (Greedy)
-Maintain a variable maxReach that stores the farthest index reachable so far.
-Traverse the array from left to right.
-For each index i:
-If i is greater than maxReach, the current index is unreachable, so return false.
-Otherwise, update maxReach as:
-maxReach = max(maxReach, i + nums[i])
 
-This represents the farthest index that can be reached either from previous jumps or by jumping from the current index.
-If maxReach reaches or exceeds the last index, return true.
-If the loop completes without finding an unreachable index, return true.
-Complexity Analysis
-Time Complexity: O(n)
-Each element is visited exactly once, and only constant-time operations are performed at each step.
-Space Complexity: O(1)
-The algorithm uses only one extra variable (maxReach), regardless of the input size.
-Key Insight
-Instead of trying every possible jump (which leads to exponential or dynamic programming solutions), the greedy approach only tracks the farthest reachable index at every step. As long as the current index is reachable, extending the farthest reachable position is sufficient to determine whether the last index can be reached. This makes the solution both optimal and efficient.
+## Approach (Greedy)
+
+- Maintain a variable `maxReach` to store the **farthest index** that can be reached at any point.
+- Traverse the array from left to right.
+- For each index `i`:
+  - If `i > maxReach`, the current index is unreachable, so return `false`.
+  - Otherwise, update the farthest reachable index:
+    ```java
+    maxReach = Math.max(maxReach, i + nums[i]);
+    ```
+  - If `maxReach` reaches or exceeds the last index, return `true`.
+- If the traversal completes without encountering an unreachable index, return `true`.
+
+### Key Insight
+
+Instead of exploring every possible jump, the algorithm greedily keeps track of the **farthest reachable index**. As long as the current index is reachable, updating the farthest reachable position is sufficient to determine whether the last index can be reached.
+
+---
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n)`
+  - The array is traversed exactly once.
+  - Each iteration performs only constant-time operations.
+
+- **Space Complexity:** `O(1)`
+  - Only one extra variable (`maxReach`) is used, regardless of the input size.
