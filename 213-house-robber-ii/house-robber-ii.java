@@ -4,9 +4,6 @@ class Solution {
         if (n == 1) {
             return nums[0];
         }
-        // if (n == 2) {
-        //     return Math.max(nums[0], nums[1]);
-        // }
         int[] dp0 = new int[n + 1];
         int[] dp1 = new int[n + 1];
         Arrays.fill(dp0, -1);
