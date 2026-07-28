@@ -1,10 +1,7 @@
 class Solution {
     public int numDecodings(String s) {
-        // Initialize the cache
         int[] dp = new int[s.length()];
         Arrays.fill(dp, -1);
-        
-        // Pass the dp array into the recursive function
         return decode(s, 0, dp);
     }
 
