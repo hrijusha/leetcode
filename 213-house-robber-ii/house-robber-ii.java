@@ -1,41 +1,33 @@
 class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
-        if (n == 1)
+        if (n == 1) {
             return nums[0];
-        if (n == 2)
+        }
+        if (n == 2) {
             return Math.max(nums[0], nums[1]);
-
-        int[] dp0 = new int[n];
+        }
+        int[] dp0 = new int[n + 1];
+        int[] dp1 = new int[n + 1];
         Arrays.fill(dp0, -1);
-
-        int[] dp1 = new int[n];
         Arrays.fill(dp1, -1);
+        int max = Math.max(maxSum(nums, dp0, 0, n - 2), maxSum(nums, dp1, 1, n - 1));
+        return max;
 
-        int max0 = maxSum(nums, n - 2, 0, dp0);
-        int max1 = maxSum(nums, n - 1, 1, dp1);
-
-        return Math.max(max0, max1);
     }
 
-    private int maxSum(int[] nums, int index, int start, int[] dp) {
+    private int maxSum(int[] nums, int[] dp, int start, int index) {
         if (index == start) {
-            return nums[start];
+            return nums[index];
         }
         if (index < start) {
             return 0;
         }
-
         if (dp[index] != -1) {
             return dp[index];
         }
-
-        int pick = nums[index] + maxSum(nums, index - 2, start, dp);
-        int notPick = maxSum(nums, index - 1, start, dp);
-
-        int ret = Math.max(pick, notPick);
-
-        dp[index] = ret;
-        return ret;
+        int max = Math.max(maxSum(nums, dp, start, index - 1), nums[index] + maxSum(nums, dp, start, index - 2));
+        dp[index] = max;
+        return max;
     }
 }
