@@ -1,26 +1,55 @@
-class Trie {
+class TrieNode {
+    Map<Character, TrieNode> children;
+    boolean isEndOfWord;
 
-    Set<String> set;
+    public TrieNode() {
+        children = new HashMap<>();
+        isEndOfWord = false;
+    }
+}
+
+class Trie {
+    private TrieNode root;
 
     public Trie() {
-        set = new HashSet<>();
+        root = new TrieNode();
     }
 
     public void insert(String word) {
-        set.add(word);
+        TrieNode curr = root;
+        for (char c : word.toCharArray()) {
+            TrieNode nextNode = curr.children.get(c);
+            if (nextNode == null) {
+                nextNode = new TrieNode();
+                curr.children.put(c, nextNode);
+            }
+            curr = nextNode;
+        }
+        curr.isEndOfWord = true;
     }
 
     public boolean search(String word) {
-        return set.contains(word);
+        TrieNode curr = root;
+        for (char c : word.toCharArray()) {
+            TrieNode nextNode = curr.children.get(c);
+            if (nextNode == null) {
+                return false;
+            }
+            curr = nextNode;
+        }
+        return curr.isEndOfWord;
     }
 
     public boolean startsWith(String prefix) {
-        for (String s : set) {
-            if (s.startsWith(prefix)) {
-                return true;
+        TrieNode curr = root;
+        for (char c : prefix.toCharArray()) {
+            TrieNode nextNode = curr.children.get(c);
+            if (nextNode == null) {
+                return false;
             }
+            curr = nextNode;
         }
-        return false;
+        return true;
     }
 }
 
