@@ -55,7 +55,7 @@ This solution implements a Trie (Prefix Tree), a specialized tree data structure
 
 ## Complexity Analysis
 
-*Let $L$ be the length of the word or prefix being processed.*
+*Let L be the length of the word or prefix being processed.*
 
 * **Time Complexity:** 
   * `insert(String word)`: $O(L)$
