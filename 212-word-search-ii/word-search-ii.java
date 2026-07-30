@@ -13,7 +13,7 @@ class Solution {
         // 2. Start DFS from every single cell on the board
         for (int r = 0; r < board.length; r++) {
             for (int c = 0; c < board[0].length; c++) {
-                dfs(board, trie.root, "", r, c, result);
+                dfs(board, trie.getRoot(), "", r, c, result);
             }
         }
 
@@ -60,10 +60,14 @@ class TrieNode {
 }
 
 class Trie {
-    public TrieNode root;
+    private TrieNode root;
 
     public Trie() {
         root = new TrieNode();
+    }
+
+    public TrieNode getRoot() {
+        return root;
     }
 
     public void insert(String word) {
