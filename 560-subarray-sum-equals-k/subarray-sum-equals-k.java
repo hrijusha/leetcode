@@ -1,15 +1,16 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        Map<Integer, Integer> prefixSumMap = new HashMap<>();
-        prefixSumMap.put(0, 1);
-        int currentSum = 0;
         int count = 0;
+        int[] prefix = new int[nums.length + 1];
+        prefix[0] = 0;
+        for (int i = 1; i <= nums.length; i++)
+            prefix[i] = prefix[i - 1] + nums[i - 1];
+
         for (int i = 0; i < nums.length; i++) {
-            currentSum = currentSum + nums[i];
-            if (prefixSumMap.containsKey(currentSum - k)) {
-                count += prefixSumMap.get(currentSum - k);
+            for (int j = i; j < nums.length; j++) {
+                if (prefix[j+1] - prefix[i] == k)
+                    count++;
             }
-            prefixSumMap.put(currentSum, prefixSumMap.getOrDefault(currentSum, 0) + 1);
         }
         return count;
     }
