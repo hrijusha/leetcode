@@ -40,7 +40,7 @@ This solution uses a Prefix Sum array combined with a nested loop to evaluate th
 * **Space Complexity:** $O(n)$
   We allocate an auxiliary `prefix` array of size $n + 1$ to store the cumulative sums, requiring linear extra space.
 
-  ## Approach: Prefix Sum + HashMap (Optimal)
+## Approach: Prefix Sum + HashMap (Optimal)
 
 This solution optimizes the prefix sum approach by using a HashMap to keep track of the frequencies of prefix sums we have seen so far. It calculates the answer in a single pass, eliminating the need for nested loops.
 
@@ -63,7 +63,7 @@ This solution optimizes the prefix sum approach by using a HashMap to keep track
 * **Space Complexity:** $O(n)$
   Where $n$ is the length of the `nums` array. In the worst-case scenario (e.g., all elements are positive numbers), every single prefix sum will be uniquely different, meaning we will insert $n$ distinct key-value pairs into the HashMap, requiring $O(n)$ auxiliary space.
 
-  ## Solution: Prefix Sum + HashMap (Optimal)
+## Solution: Prefix Sum + HashMap (Optimal)
 
 ```java
 class Solution {
