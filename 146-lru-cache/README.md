@@ -42,3 +42,27 @@ lRUCache.get(4);    // return 4
 	<li><code>0 &lt;= value &lt;= 10<sup>5</sup></code></li>
 	<li>At most <code>2 * 10<sup>5</sup></code> calls will be made to <code>get</code> and <code>put</code>.</li>
 </ul>
+
+## Approach: HashMap + Doubly Linked List
+
+This solution implements a Least Recently Used (LRU) Cache by combining a **HashMap** (for fast lookups) and a custom **Doubly Linked List** (for fast updates to the access order).
+
+1. **State Definition & Initialization:** 
+   * **HashMap (`cache`):** Stores keys mapped to their corresponding Linked List nodes, providing $O(1)$ access time.
+   * **Doubly Linked List (DLL):** Maintains the access order. The front (right after the head) represents the Most Recently Used (MRU) item, while the back (right before the tail) represents the Least Recently Used (LRU) item.
+   * **Dummy Nodes:** We initialize dummy `head` and `tail` nodes linked to each other. This is a classic DLL trick that eliminates edge cases (like inserting into an empty list or deleting the last node), ensuring pointer manipulations never hit `NullPointerException`.
+2. **Read Operation (`get`):** 
+   If the key exists in the HashMap, we retrieve the corresponding node. Because accessing the data counts as "using" it, we must update its rank. We `remove()` the node from its current position in the DLL and `insert()` it right behind the dummy `head` (marking it as the MRU). Then, we return its value. If the key doesn't exist, we return `-1`.
+3. **Write Operation (`put`):** 
+   * **Update Existing:** If the key already exists, we fetch the node, update its `value`, and move it to the MRU position (head) using the same `remove()` and `insert()` logic.
+   * **Insert New:** If the key is new, we create a new `Node`, add it to the HashMap, and `insert()` it at the MRU position (head).
+4. **Eviction Policy:** 
+   After inserting a new node, we check if the `cache.size()` exceeds our allowed `capacity`. If it does, we must evict the LRU item. Because of our DLL structure, the LRU item is always guaranteed to be the node immediately preceding the dummy tail (`tail.prev`). We remove this node from the DLL and delete its key from the HashMap.
+
+## Complexity Analysis
+
+* **Time Complexity:** 
+  * `get(int key)`: $O(1)$ average time. HashMap lookups take $O(1)$, and DLL pointer updates (removing and inserting nodes) strictly take $O(1)$ time.
+  * `put(int key, int value)`: $O(1)$ average time. HashMap insertions and DLL pointer updates are both constant time operations. Even during an eviction, accessing `tail.prev` and removing it from both structures takes $O(1)$ time.
+* **Space Complexity:** $O(C)$
+  Where $C$ is the `capacity` of the cache. At any given time, the HashMap holds at most $C$ key-value pairs, and the Doubly Linked List holds at most $C + 2$ nodes (including the dummy `head` and `tail`).
