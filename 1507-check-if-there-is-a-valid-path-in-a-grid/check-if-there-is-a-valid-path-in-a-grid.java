@@ -26,12 +26,16 @@ class Solution {
             //get all the connections from that index
             int[][] directions = map.get(currentVal);
             for (int[] dir : directions) {
+                //get neighbour
                 int nr = r + dir[0];
                 int nc = c + dir[1];
+                //we have to check if connections to neighbours are bi-directional to establish a valid path
                 boolean hasConnection = false;
+                //boundary conditions and visited array check
                 if (nr >= 0 && nc >= 0 && nr < m && nc < n && visited[nr][nc] == false) {
                     int nextVal = grid[nr][nc];
                     int[][] nextDirections = map.get(nextVal);
+                    //if any of direction of neighbor is pointing back at current grid then it has connection
                     for (int[] ndir : nextDirections) {
                         if (ndir[0] == -dir[0] && ndir[1] == -dir[1]) {
                             hasConnection = true;
@@ -39,6 +43,7 @@ class Solution {
                         }
                     }
                     if (hasConnection) {
+                        //add to queue and mark as visited
                         visited[nr][nc] = true;
                         q.offer(new int[] { nr, nc });
                     }
