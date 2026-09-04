@@ -1,79 +1,71 @@
 class LRUCache {
-    //Define the Doubly Linked List Node
     class Node {
         int key;
-        int value;
+        int val;
         Node prev;
         Node next;
 
-        Node(int key, int value) {
+        public Node(int key, int val) {
             this.key = key;
-            this.value = value;
+            this.val = val;
         }
     }
 
-    private int capacity;
-    private Map<Integer, Node> cache;
-    private Node head;
-    private Node tail;
+    Map<Integer, Node> map;
+    Node head;
+    Node tail;
+    int capacity;
 
     public LRUCache(int capacity) {
-        this.capacity = capacity;
-        this.cache = new HashMap<>();
-
-        this.head = new Node(-1, -1);
-        this.tail = new Node(-1, -1);
+        map = new HashMap<>();
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
         head.next = tail;
         tail.prev = head;
-    }
-
-    //remove an existing node from the linked list
-    private void remove(Node node) {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-    }
-
-    //insert a node right after the dummy head (marks it as Most Recently Used)
-    private void insert(Node node) {
-        node.next = head.next;
-        node.next.prev = node;
-        head.next = node;
-        node.prev = head;
+        this.capacity = capacity;
     }
 
     public int get(int key) {
-        //check the key in hashmap
-        if (cache.containsKey(key)) {
-            Node node = cache.get(key);
-            remove(node);
-            insert(node);
-            return node.value;
+        if (!map.containsKey(key)) {
+            return -1;
         }
-        return -1;
+        Node node = map.get(key);
+        remove(node);
+        moveNodeAfterHead(node);
+        return node.val;
+    }
+
+    private void remove(Node node) {
+        Node prev = node.prev;
+        Node next = node.next;
+        prev.next = next;
+        next.prev = prev;
+    }
+
+    private void moveNodeAfterHead(Node node) {
+        Node next = head.next;
+        head.next = node;
+        node.prev = head;
+        node.next = next;
+        next.prev = node;
     }
 
     public void put(int key, int value) {
-        if (cache.containsKey(key)) {
-            //update existing node and move to front
-            Node node = cache.get(key);
-            node.value = value;
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            node.val = value;
             remove(node);
-            insert(node);
-        } else {
-            //create new node
-            Node newNode = new Node(key, value);
-            cache.put(key, newNode);
-            insert(newNode);
-
-            //check capacity
-            if (cache.size() > capacity) {
-                //The LRU node is the one right before the dummy tail
-                Node lru = tail.prev;
-                remove(lru);
-                cache.remove(lru.key); // Also remove from HashMap
-            }
+            moveNodeAfterHead(node);
+            return;
         }
-
+        if (map.size() >= capacity) {
+            Node lru = tail.prev;
+            remove(lru);
+            map.remove(lru.key);
+        }
+        Node node = new Node(key, value);
+        moveNodeAfterHead(node);
+        map.put(key, node);
     }
 }
 
