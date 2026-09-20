@@ -16,10 +16,9 @@ class Solution {
                 j++;
             }
         }
-        if((m+n)%2 ==0){
-            return (prev+current)/2;
-        }
-        else{
+        if ((m + n) % 2 == 0) {
+            return (prev + current) / 2;
+        } else {
             return current;
         }
 
