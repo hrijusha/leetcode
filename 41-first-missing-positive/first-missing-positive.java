@@ -1,14 +1,22 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], i);
-        }
-        for (int i = 1; i <= nums.length + 1; i++) {
-            if (!map.containsKey(i)) {
-                return i;
+            while (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1]) {
+                int corrIndx = nums[i] - 1;
+                int temp = nums[corrIndx];
+                if (nums[i] != nums[corrIndx]) {
+                    nums[corrIndx] = nums[i];
+                    nums[i] = temp;
+                }
             }
         }
-        return 0;
+
+       for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        return nums.length + 1;
+
     }
 }
