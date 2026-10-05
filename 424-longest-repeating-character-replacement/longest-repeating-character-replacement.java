@@ -1,25 +1,45 @@
+// class Solution {
+//     public int characterReplacement(String s, int k) {
+//         int n = s.length();
+//         int maxL = 0;
+//         for (int start = 0; start < n; start++) {
+//             Map<Character, Integer> map = new HashMap<>();
+//             int maxFreq = 0;
+//             for (int end = start; end < n; end++) {
+//                 int len = end - start + 1;
+//                 char ch = s.charAt(end);
+//                 int freq = map.getOrDefault(ch, 0) + 1;
+//                 map.put(ch, freq);
+//                 maxFreq = Math.max(freq, maxFreq);
+//                 if (k >= len - maxFreq) {
+//                     maxL = Math.max(len, maxL);
+//                 }
+//             }
+//         }
+//         return maxL;
+//     }
+// }
+
 class Solution {
     public int characterReplacement(String s, int k) {
-        HashMap<Character, Integer> countMap = new HashMap<>();
         int left = 0;
-        int maxCount = 0;
-        int maxSize = 0;
+        int maxL = 0;
+        int maxF = 0;
+        Map<Character, Integer> map = new HashMap<>();
         for (int right = 0; right < s.length(); right++) {
-            char c = s.charAt(right);
-            int count = countMap.getOrDefault(c, 0) + 1;
-            maxCount = Math.max(maxCount, count);
-            countMap.put(c, count);
-
-            int windowSize = right - left + 1;
-            if (windowSize - maxCount <= k) {
-                maxSize = Math.max(maxSize, windowSize);
-            } else {
-                //Move the sliding window
-                char leftChar = s.charAt(left);
-                countMap.put(leftChar, countMap.get(leftChar) - 1);
+            char ch = s.charAt(right);
+            int freq = map.getOrDefault(ch, 0) + 1;
+            maxF = Math.max(freq, maxF);
+            map.put(ch, freq);
+            int len = right - left + 1;
+            if (k < len - maxF) {
+                char chl = s.charAt(left);
+                map.put(chl, map.get(chl) - 1);
                 left++;
             }
+            len = right - left + 1;
+            maxL = Math.max(len, maxL);
         }
-        return maxSize;
+        return maxL;
     }
 }
