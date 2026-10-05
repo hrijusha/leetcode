@@ -1,3 +1,8 @@
+// Brute force -> Try every substring.
+// replacements needed = length - maxFreq.
+// If replacements <= k, update max length.
+// Time: O(n²), Space: O(1)
+
 // class Solution {
 //     public int characterReplacement(String s, int k) {
 //         int n = s.length();
@@ -19,6 +24,11 @@
 //         return maxL;
 //     }
 // }
+
+// Sliding window -> Maintain a window where length - maxFreq <= k.
+// Expand right; if invalid, move left.
+// maxFreq = highest frequency seen in current/previous window.
+// Time: O(n), Space: O(1)
 
 class Solution {
     public int characterReplacement(String s, int k) {
