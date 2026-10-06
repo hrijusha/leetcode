@@ -1,3 +1,6 @@
+// Take k cards from both ends = leave n-k contiguous cards in middle.
+// Find minimum middle-window sum; answer = total sum - minimum window sum.
+
 class Solution {
     public int maxScore(int[] cardPoints, int k) {
         int start = 0;
@@ -16,7 +19,7 @@ class Solution {
                 start++;
             }
             sum = sum + cardPoints[end];
-            
+
             if (end - start + 1 == windowSize) {
                 max = Math.max(max, total - sum);
             }
