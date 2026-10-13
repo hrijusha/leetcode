@@ -24,14 +24,14 @@ class Solution {
         for (int i = 0; i < names.length; i++) {
             String s = names[i];
             if (map.containsKey(s)) {
-                int k = map.getOrDefault(s, 0);
+                int k = map.getOrDefault(s, 1);
                 String can = s + "(" + k + ")";
                 while (map.containsKey(can)) {
                     k++;
                     can = s + "(" + k + ")";
                 }
                 names[i] = can;
-                map.put(s, k + 1);
+                map.put(s, k);
                 map.put(can, 1);
             } else {
                 map.put(s, 1);
