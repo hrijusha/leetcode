@@ -8,20 +8,14 @@ class Solution {
                 if (stack.isEmpty()) {
                     return false;
                 }
-                if (stack.peek() == '{' && c == '}') {
-                    stack.pop();
-                } else if (stack.peek() == '(' && c == ')') {
-                    stack.pop();
-                } else if (stack.peek() == '[' && c == ']') {
-                    stack.pop();
-                } else {
+                char top = stack.pop();
+                if ((c == '}' && top != '{')
+                        || (c == ')' && top != '(')
+                        || (c == ']' && top != '[')) {
                     return false;
                 }
             }
         }
-        if(stack.isEmpty()){
-            return true;
-        }
-        return false;
+        return stack.isEmpty();
     }
 }
